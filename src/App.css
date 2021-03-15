@@ -24,6 +24,10 @@
   color: white;
 }
 
+#loggedin {
+  font-size: 7px;
+}
+
 .App-link {
   color: #61dafb;
 }
