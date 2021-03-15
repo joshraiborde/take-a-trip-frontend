@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-import usersReducer from './reducers/users'
+// import usersReducer from './reducers/users'
 import currentUser from './reducers/currentUser'
 import loginForm from './reducers/loginForm'
 import myTrips from './reducers/myTrips'
@@ -8,7 +8,7 @@ import newTripForm from './reducers/newTripForm'
 import thunk from 'redux-thunk'
 
 const reducer = combineReducers({
-  user: usersReducer,
+  // user: usersReducer,
   currentUser,
   loginForm,
   myTrips,
