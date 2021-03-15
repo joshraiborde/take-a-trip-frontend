@@ -19,7 +19,7 @@ const NewTripForm = ({ formData, history, updateNewTripForm, createTrip, userId 
     createTrip({
       ...formData,
       userId
-    })
+    }, history)
   }
 
   return (
@@ -31,13 +31,13 @@ const NewTripForm = ({ formData, history, updateNewTripForm, createTrip, userId 
         value={name}
       /><br/>
       <input
-        placeholder="start date"
+        placeholder="start date mm-dd-yyyy"
         name="startDate"
         onChange={handleChange}
         value={startDate}
       /><br/>
       <input
-        placeholder="end date"
+        placeholder="end date mm-dd-yyyy"
         name="endDate"
         onChange={handleChange}
         value={endDate}
@@ -50,7 +50,7 @@ const NewTripForm = ({ formData, history, updateNewTripForm, createTrip, userId 
 )};
 
 const mapStateToProps = state => {
-  const userId = state.currentUser ? state.currentUser.id : "" 
+  const userId = state.currentUser ? state.currentUser.id : ""
   return {
     formData: state.newTripForm,
     userId
