@@ -1,15 +1,26 @@
 import React from 'react';
+
 import { updateNewTripForm } from '../actions/newTripForm'
+import { createTrip } from '../actions/myTrips'
 import { connect } from 'react-redux'
 
-const NewTripForm = ({name, startDate, endDate, history}) => {
+
+const NewTripForm = ({ formData, history, updateNewTripForm, createTrip, userId }) => {
+  const { name, startDate, endDate } = formData
 
   const handleChange = event => {
+    console.log("trigger Handle change")
     const { name, value } = event.target
     updateNewTripForm(name, value)
   }
 
-  const handleSubmit = event => event.preventDefault()
+  const handleSubmit = event => {
+    event.preventDefault()
+    createTrip({
+      ...formData,
+      userId
+    })
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -39,12 +50,12 @@ const NewTripForm = ({name, startDate, endDate, history}) => {
 )};
 
 const mapStateToProps = state => {
-    const { startDate, endDate, name } = state.newTripForm
-    return {
-      startDate,
-      endDate,
-      name
-    }
+  const userId = state.currentUser ? state.currentUser.id : "" 
+  return {
+    formData: state.newTripForm,
+    userId
   }
-  
-  export default connect(mapStateToProps, { updateNewTripForm })(NewTripForm);
+}
+
+
+export default connect(mapStateToProps, { updateNewTripForm, createTrip })(NewTripForm);
