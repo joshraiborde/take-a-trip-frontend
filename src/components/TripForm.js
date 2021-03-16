@@ -3,7 +3,7 @@ import { updateTripForm } from '../actions/tripForm'
 import { connect } from 'react-redux'
 
 
-const TripForm = ({ formData, history, updateTripForm, userId, trip, handleSubmit, editMode }) => {
+const TripForm = ({ formData, updateTripForm, userId, trip, handleSubmit, editMode }) => {
 
   const { name, startDate, endDate } = formData
 
@@ -15,8 +15,8 @@ const TripForm = ({ formData, history, updateTripForm, userId, trip, handleSubmi
 
   return (
     <form onSubmit={event => {
-      console.log("here we are!")
-      handleSubmit(event, formData, userId, history)
+      event.preventDefault()
+      handleSubmit(formData)
     }}>
       <input
         placeholder="name"
