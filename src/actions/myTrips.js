@@ -20,6 +20,13 @@ export const setMyTrips = trips => {
     }
   }
 
+  export const deleteTripSuccess = tripId => {
+    return {
+      type: "DELETE_TRIP",
+      tripId
+    }
+  }
+
   export const updateTripSuccess = trip => {
     return {
       type: "UPDATE_TRIP",
@@ -43,7 +50,6 @@ export const getMyTrips = () => {
         if (response.error) {
           alert(response.error)
         } else {
-          console.log(response.data)
           dispatch(setMyTrips(response.data))
         }
       })
@@ -75,8 +81,7 @@ export const createTrip = (tripData, history) => {
           dispatch(addTrip(resp.data))
           dispatch(resetTripForm())
           history.push(`/trips/${resp.data.id}`)
-          // go somewhere else --> trip show?
-          // add the new trip to the store
+          
         }
       })
       .catch(console.log)
@@ -89,8 +94,7 @@ export const updateTrip = (tripData, history) => {
     const sendableTripData = {
       start_date: tripData.startDate,
       end_date: tripData.endDate,
-      name: tripData.name,
-      user_id: tripData.userId
+      name: tripData.name
     }
     return fetch(`http://localhost:3001/api/v1/trips/${tripData.tripId}`, {
       credentials: "include",
@@ -106,11 +110,34 @@ export const updateTrip = (tripData, history) => {
           alert(resp.error)
         } else {
           dispatch(updateTripSuccess(resp.data))
-          dispatch(resetTripForm())
           history.push(`/trips/${resp.data.id}`)
         }
       })
       .catch(console.log)
 
   }
+}
+
+export const deleteTrip = (tripId, history) => {
+  return dispatch => {
+    return fetch(`http://localhost:3001/api/v1/trips/${tripId}`, {
+      credentials: "include",
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(r => r.json())
+      .then(resp => {
+        if (resp.error) {
+          alert(resp.error)
+        } else {
+          dispatch(deleteTripSuccess(tripId))
+          history.push(`/trips`)
+        }
+      })
+      .catch(console.log)
+
+  }
+
 }
